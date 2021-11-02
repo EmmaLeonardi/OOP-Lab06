@@ -31,7 +31,7 @@ public class NotEnoughBatteryException extends Exception {
 //	}
 	
 	public String toString() {
-        return "Can not move to, not enough battery: "+battery+" %";
+        return "Cannot move, not enough battery: "+battery+" %";
     }
 	
 	public String getMessage() {
