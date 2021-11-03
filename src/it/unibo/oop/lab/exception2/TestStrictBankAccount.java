@@ -29,57 +29,67 @@ public final class TestStrictBankAccount {
 		var Bianchi = new AccountHolder("Lucia", "Bianchi", 20);
 		var AccRossi = new StrictBankAccount(Rossi.getUserID(), 10000, 10);
 		var AccBianchi = new StrictBankAccount(Bianchi.getUserID(), 10000, 10);
-		
-		assertEquals(AccRossi.getBalance(),10000, 0.5);
-		assertEquals(AccBianchi.getBalance(),10000, 0.5);
+
+		assertEquals(AccRossi.getBalance(), 10000, 0.5);
+		assertEquals(AccBianchi.getBalance(), 10000, 0.5);
+		System.out.println("Rossi " + AccRossi.getTransactionCount());
+		System.out.println("Bianchi " + AccBianchi.getTransactionCount());
 		try {
-		AccRossi.deposit(Rossi.getUserID(), 10);
-		AccBianchi.withdraw(Bianchi.getUserID(), 10);
-		}catch(WrongAccountHolderException |NotEnoughFoundsException e) {
+			AccRossi.deposit(Rossi.getUserID(), 10);
+			AccBianchi.withdraw(Bianchi.getUserID(), 10);
+		} catch (WrongAccountHolderException | NotEnoughFoundsException e) {
 			fail("Shouldn't have failed");
 		}
-		
+		System.out.println("Rossi " + AccRossi.getTransactionCount());
+		System.out.println("Bianchi " + AccBianchi.getTransactionCount());
 		try {
-			AccBianchi.deposit(Rossi.getUserID(),10);
+			AccBianchi.deposit(Rossi.getUserID(), 10);
 			fail();
-		}catch(WrongAccountHolderException e){
-			//Should fail
+		} catch (WrongAccountHolderException e) {
+			// Should fail
 		}
-		
-		for(int i=0; i<9; i++) {
+
+		for (int i = 0; i < 7; i++) {
 			try {
-			AccRossi.depositFromATM(Rossi.getUserID(), 1);
-			}catch(WrongAccountHolderException| TransactionsOverQuotaException e) {
+				AccRossi.depositFromATM(Rossi.getUserID(), 1);
+				System.out.println("i " + i);
+				System.out.println("Trans: " + AccRossi.getTransactionCount());// Perchè è la 11° transazione?
+			} catch (WrongAccountHolderException e) {
+				fail("Shouldn't have failed");
+			} catch (TransactionsOverQuotaException f) {
 				fail("Shouldn't have failed");
 			}
 			try {
 				AccBianchi.withdrawFromATM(Bianchi.getUserID(), 1);
-			}catch(WrongAccountHolderException|TransactionsOverQuotaException|NotEnoughFoundsException e) {
+			} catch (WrongAccountHolderException | TransactionsOverQuotaException | NotEnoughFoundsException e) {
 				fail("Shouldn't have failed");
 			}
 		}
-		
+
 		try {
 			AccBianchi.depositFromATM(Bianchi.getUserID(), 10);
+			AccBianchi.depositFromATM(Bianchi.getUserID(), 10);
+			System.out.println("Trans: " + AccBianchi.getTransactionCount());
+			AccBianchi.depositFromATM(Bianchi.getUserID(), 10);
+			System.out.println("Trans: " + AccBianchi.getTransactionCount());
 			fail();
-		}catch(TransactionsOverQuotaException e) {
-			//Should fail
-		}catch(WrongAccountHolderException e) {
+		} catch (TransactionsOverQuotaException e) {
+			// Should fail
+		} catch (WrongAccountHolderException e) {
 			fail("Shouldn't have failed");
 		}
-		
+
 		try {
 			AccRossi.computeManagementFees(Rossi.getUserID());
-		}catch(WrongAccountHolderException|NotEnoughFoundsException e) {
+		} catch (WrongAccountHolderException | NotEnoughFoundsException e) {
 			fail();
 		}
-		
+
 		try {
 			AccRossi.withdraw(Rossi.getUserID(), 100000);
-		}catch(NotEnoughFoundsException e) {
-			//Should fail
-		}
-		catch(WrongAccountHolderException e){
+		} catch (NotEnoughFoundsException e) {
+			// Should fail
+		} catch (WrongAccountHolderException e) {
 			fail();
 		}
 
