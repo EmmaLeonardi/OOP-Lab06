@@ -1,8 +1,5 @@
 package it.unibo.oop.lab06.generics1;
 
-/**
- *
- */
 public final class UseGraph {
 
 	private UseGraph() {
