@@ -44,6 +44,15 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
 	 * 2) Define a further constructor where age is defaulted to -1
 	 */
 
+	
+	/**
+	 * Builds a new {@link SocialNetworkUserImpl}.
+	 * 
+	 * @param name    the user firstname
+	 * @param surname the user lastname
+	 * @param user    alias of the user, i.e. the way a user is identified on an
+	 *                application
+	 */
 	public SocialNetworkUserImpl(final String name, final String surname, final String user) {
 		this(name, surname, user, -1);
 	}
