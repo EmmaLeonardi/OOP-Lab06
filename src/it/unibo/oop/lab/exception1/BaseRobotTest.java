@@ -38,14 +38,15 @@ public final class BaseRobotTest {
 				r1.moveRight();
 			} catch (PositionOutOfBoundException | NotEnoughBatteryException e) {
 				assertNotNull(e.getMessage());
-				fail();
+				fail("Shouldn't have thrown exception,"
+						+ " there was enough battery for movement and the position was legal");
 
 			}
 		}
 		// reached the right limit of the world
 		try {
 			r1.moveRight();
-			fail("Should have thrown exception");
+			fail("Should have thrown exception, can't move out of bounds");
 		} catch (PositionOutOfBoundException | NotEnoughBatteryException e) {
 			assertNotNull(e.getMessage());
 		}
@@ -62,13 +63,14 @@ public final class BaseRobotTest {
 				r1.moveUp();
 			} catch (PositionOutOfBoundException | NotEnoughBatteryException e) {
 				assertNotNull(e.getMessage());
-				fail();
+				fail("Shouldn't have thrown exception,"
+						+ " there was enough battery for movement and the position was legal");
 			}
 		}
 		// reached the upper limit of the world
 		try {
 			r1.moveUp();
-			fail("Should have thrown exception");
+			fail("Should have thrown exception, can't move out of bounds");
 		} catch (PositionOutOfBoundException | NotEnoughBatteryException e) {
 			assertNotNull(e.getMessage());
 		}
@@ -95,7 +97,7 @@ public final class BaseRobotTest {
 				r2.moveUp();
 				r2.moveDown();
 			} catch (NotEnoughBatteryException e) {
-				fail("Shouldn't have failed");
+				fail("Shouldn't have failed, there was enough battery");
 			}
 		}
 		// verify battery level:
